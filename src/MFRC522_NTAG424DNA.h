@@ -6,7 +6,8 @@
 #ifndef MFRC522_NTAG424DNA_h
 #define MFRC522_NTAG424DNA_h
 
-#include <MFRC522Extended.h>
+#include "MFRC522Extended.h"
+#include "MFRC522Constants.h"
 #include <AES.h>
 #include <CBC.h>
 #include <AES_CMAC.h>
@@ -14,18 +15,14 @@
 
 class MFRC522_NTAG424DNA : public MFRC522Extended {
 
+
 public:
   
   
   /////////////////////////////////////////////////////////////////////////////////////
-  // Contructors
+  // Contructor
   /////////////////////////////////////////////////////////////////////////////////////
-  
-  
-  MFRC522_NTAG424DNA() : MFRC522Extended() {};
-  MFRC522_NTAG424DNA(uint8_t rst) : MFRC522Extended(rst) {};
-  MFRC522_NTAG424DNA(uint8_t ss, uint8_t rst) : MFRC522Extended(ss, rst) {};
-  
+  MFRC522_NTAG424DNA(MFRC522Driver &driver) : MFRC522Extended(driver) {};
   
   enum DNA_StatusCode : byte {
     DNA_STATUS_OK = 0, // Success (and 0x9000, 0x9100 - OPERATION_OK / Successful operaton)
@@ -104,7 +101,8 @@ public:
   //
   /////////////////////////////////////////////////////////////////////////////////////
   
-  
+
+
   StatusCode DNA_BasicTransceive(byte* sendData, byte sendLen, byte* backData, byte* backLen, byte pcb = 2);
   
   DNA_StatusCode DNA_AuthenticateEV2First(byte keyNumber, byte* key, byte* rndA);
@@ -284,7 +282,6 @@ protected:
   // Protected functions
   //
   /////////////////////////////////////////////////////////////////////////////////////
-  
   StatusCode DNA_AuthenticateEV2First_Part1(byte keyNumber, byte* backData, byte* backLen);
   StatusCode DNA_AuthenticateEV2First_Part2(byte* inData, byte* backData, byte* backLen);
   StatusCode DNA_AuthenticateEV2NonFirst_Part1(byte keyNumber, byte* backData, byte* backLen);
