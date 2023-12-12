@@ -2145,7 +2145,7 @@ void MFRC522_NTAG424DNA::DNA_CalculateCMACtNoData(byte Cmd, byte* CmdHeader, byt
 void MFRC522_NTAG424DNA::DNA_CalculateCRC32NK(byte* message16, byte* backCRC)
 {
   uint32_t crc;
-  crc = CRC32::calculate(message16, 16) & 0xFFFFFFFF ^ 0xFFFFFFFF;
+  crc = (CRC32::calculate(message16, 16) & 0xFFFFFFFF) ^ 0xFFFFFFFF;
   memcpy(backCRC, &crc, 4);
 }
 
